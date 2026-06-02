@@ -41,7 +41,7 @@ def main(input_file, output_file, checklist):
     attributes = list(data_table.columns)
     attributes = [a
                   for a in attributes
-                  if a not in ['alias', 'title', 'taxon_id', 'center_name']]
+                  if a not in ['alias', 'title', 'taxon_id']]
 
     tree = ET.ElementTree('tree')
 
@@ -55,8 +55,6 @@ def main(input_file, output_file, checklist):
         sample_tag = ET.SubElement(parent_tag, 'SAMPLE')
         # Add alias attribute to SAMPLE tag
         sample_tag.set('alias', current_sample['alias'])
-        # Add center_name attribute to SAMPLE tag
-        sample_tag.set('center_name', current_sample['center_name'])
         # Add TITLE tag
         title_tag = ET.SubElement(sample_tag, 'TITLE')
         title_tag.text = current_sample['title']

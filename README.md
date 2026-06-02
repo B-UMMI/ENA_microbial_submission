@@ -8,7 +8,7 @@ Review the [Register a Study Interactively](https://ena-docs.readthedocs.io/en/l
 
 ## Register Samples
 
-The next step is to register your samples. You can find information about this step on the [How to Register Samples](https://ena-docs.readthedocs.io/en/latest/submit/samples.html) and [Register Samples Programmatically](https://ena-docs.readthedocs.io/en/latest/submit/samples/programmatic.html) sections. We will use the ERC000028 checklist (ENA prokaryotic pathogen minimal sample checklist, available [here](https://www.ebi.ac.uk/ena/browser/view/ERC000028)). We will be constructing the XML based on the fields in the checklist (we will not modify the checklist file for submission). This repo includes a TSV file, `test_sample_metadata.tsv`, with example metadata necessary to create the XML file to register samples in the ENA. You can leave the `center_name` field empty. The centre name is automatically assigned from submission account details, and any value that you include in the metadata will be ignored (more information about this [here](https://ena-docs.readthedocs.io/en/latest/submit/general-guide/programmatic.html#identifying-submitters)). To create the XML file based on your sample metadata, run the `ena_samples_xml.py` script. Adapt the following command:
+The next step is to register your samples. You can find information about this step on the [How to Register Samples](https://ena-docs.readthedocs.io/en/latest/submit/samples.html) and [Register Samples Programmatically](https://ena-docs.readthedocs.io/en/latest/submit/samples/programmatic.html) sections. We will use the ERC000028 checklist (ENA prokaryotic pathogen minimal sample checklist, available [here](https://www.ebi.ac.uk/ena/browser/view/ERC000028)). We will be constructing the XML based on the fields in the checklist (we will not modify the checklist file for submission). This repo includes a TSV file, `test_sample_metadata.tsv`, with example metadata necessary to create the XML file to register samples in the ENA. You do not need to provide the `center_name` as that value is automatically assigned from submission account details, and any value that you include in the metadata will be ignored (more information about this [here](https://ena-docs.readthedocs.io/en/latest/submit/general-guide/programmatic.html#identifying-submitters)). To create the XML file based on your sample metadata, run the `ena_samples_xml.py` script. Adapt the following command:
 
 ```
 python generate_sample_xml.py -i test_sample_metadata.tsv -o sample.xml -c ERC000028
@@ -26,12 +26,12 @@ Remember to save the response to a file (copy what is printed to the terminal or
 ## Prepare and Upload Read Files
 
 The FASTQ files must be compressed using gzip or bzip2 (check the section about [Preparing A File For Upload](https://ena-docs.readthedocs.io/en/latest/submit/fileprep/preparation.html#preparing-a-file-for-upload)). The `generate_run_experiment_xml.py` script determines the checksums and creates the XML file to register your Runs and Experiments. In this step, you only need to make sure that your files are compressed and that the filenames are in the format `<SAMPLE_ALIAS>_{1,2}.fastq.gz` (The `SAMPLE_ALIAS` is the value used as `alias` in the TSV file with the sample metadata).
-To upload read files:
+To upload read files, the best approach is to `cd` into the folder where the sample FASTQ files are stored and go through the following steps:
 
 1. Open a terminal and type `lftp webin2.ebi.ac.uk -u Webin-xxxxx`, filling in your Webin username (must have `lftp` installed).
 2. Enter your password when prompted.
 3. Type `ls` to check the content of your dropbox.
-4. Upload files using the `mput <filename>` command.
+4. Upload files using the `mput <filename>` command (to upload all compressed FASTQ files in the folder use `mput *.fastq.gz`).
 5. Use the `bye` command to exit the FTP client.
 
 If the `ls` command gets stuck at `Making data connection...`, try to connect to the server through `ftp` with the following command: `ftp -i Webin-xxxxx@webin2.ebi.ac.uk`.
