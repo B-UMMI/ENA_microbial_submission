@@ -46,7 +46,9 @@ You must create a TSV file with the data necessary to register the Runs and Expe
 python generate_run_experiment_xml.py -i test_run_experiment_metadata.tsv -o studyID --study studyID --reads readsDirectory
 ```
 
-The `studyID` is the BioProject accession number attributed when registering the Study.
+**The `studyID` is the BioProject accession number attributed when registering the Study.**
+You can determine the Instrument model with the [fcid](https://github.com/nickp60/fcid) tool. You will probably need to adapt the values determined by fcid to match the values supported by ENA (list of supported values [here](https://ena-docs.readthedocs.io/en/latest/submit/reads/webin-cli.html#instrument)).
+
 To submit the XML files and register your Runs and Experiments, you can run the following command:
 
 ```
